@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# usage: cpgen [count] [dir]    default: 7 problems (A-G) in the current directory
+n=${1:-7}; dir=${2:-.}
+tpl=${CP_TEMPLATE:-$HOME/cp/templates/cpp.cpp}
+letters=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+[[ $n =~ ^[0-9]+$ ]] && (( n >= 1 && n <= 26 )) || { echo "count must be 1-26"; exit 1; }
+[[ -f $tpl ]] || { echo "template not found: $tpl"; exit 1; }
+
+mkdir -p "$dir"
+for ((i = 0; i < n; i++)); do
+  f="$dir/${letters:i:1}.cpp"
+  if [[ -e $f ]]; then echo "skip  $f (exists)"; else cp "$tpl" "$f"; echo "made  $f"; fi
+done

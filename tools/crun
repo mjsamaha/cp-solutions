@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# usage: crun [-c] [-f infile] <file.cpp>
+#   (default)  paste input in the terminal, then Ctrl-D on a new line to run
+#   -c         read input from the Windows clipboard
+#   -f FILE    read input from a file
+clip=0; infile=""
+while getopts "cf:" o; do
+  case $o in c) clip=1 ;; f) infile=$OPTARG ;; *) exit 2 ;; esac
+done
+shift $((OPTIND - 1))
+src=${1:?usage: crun [-c] [-f infile] file.cpp}
+
+CXX=${CXX:-g++}
+bin=/tmp/crun-$USER/$(realpath "$src" | tr / _)
+mkdir -p "$(dirname "$bin")"
+$CXX -std=c++20 -O2 -Wall -Wextra -Wshadow -DLOCAL "$src" -o "$bin" || exit 1
+
+if (( clip )); then
+  echo "--- input from clipboard ---"
+  time "$bin" < <(powershell.exe -NoProfile -Command Get-Clipboard | tr -d '\r')
+elif [[ -n $infile ]]; then
+  time "$bin" < "$infile"
+else
+  echo "Paste input, then press Ctrl-D on a new line:"
+  input=$(cat)
+  echo "--- output ---"
+  time "$bin" <<< "$input"
+fi

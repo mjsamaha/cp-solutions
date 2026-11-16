@@ -1,0 +1,8 @@
+.sol.bin
+a.out
+*.o
+*.exe
+build/
+.last
+compile_commands.json
+.cache/
