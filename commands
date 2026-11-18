@@ -1,5 +1,8 @@
+GIT INTEGRATION
 gsave - add, commit, and push
 example:
-gsave message...
+#~ gsave ["message"]
 
 
+COMPILE + BUILD + RUN
+#~ cpr [filename]
