@@ -14,6 +14,7 @@ void yes() { cout << "yes" << '\n'; }
 void no() { cout << "no" << '\n'; }
 
 void solve() {
+    // solve
 
     int n;
     int acount = 0;
