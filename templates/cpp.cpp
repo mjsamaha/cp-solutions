@@ -1,3 +1,7 @@
+/**
+ * Author:  lobsterchops
+ * Created: __DATETIME__
+ */
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -6,6 +10,9 @@ using namespace std;
 #else
 #define dbg(x)
 #endif
+
+void YES() { cout << "YES\n"; }
+void NO()  { cout << "NO\n"; }
 
 void solve() {
 }
